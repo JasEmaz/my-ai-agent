@@ -1,0 +1,74 @@
+{
+  "folderStructure": "src/\n  ├── tools/\n  │   ├── git/\n  │   │   ├── commit-analyzer.ts    # LLM-based commit analysis\n  │   │   └── diff-parser.ts        # Git diff parsing utilities\n  │   └── llm/\n  │       ├── prompt-templates.ts   # LLM prompt engineering\n  │       └── types.ts             # Shared LLM types\n  └── utils/\n      └── categorize-changes.ts    # Change type detection",
+  "signatures": [
+    {
+      "name": "analyzeCommitChanges",
+      "signature": "async function analyzeCommitChanges(diff: string, files: string[]): Promise<CommitAnalysis>",
+      "purpose": "Analyze git diff using LLM to understand the nature and scope of changes",
+      "throws": {
+        "LLMTimeoutError": "Thrown when LLM service fails to respond within TIMEOUT_MS (2000ms). Retry with exponential backoff.",
+        "InvalidResponseError": "Thrown when LLM response is malformed or missing required fields. Check response validation.",
+        "ValidationError": "Thrown when input diff or files are invalid/malformed. Validate inputs before calling.",
+        "NetworkError": "Thrown on LLM service connectivity issues. Retry with fallback providers if available."
+      }
+    },
+    {
+      "name": "categorizeChanges",
+      "signature": "function categorizeChanges(files: string[], diff: string): ChangeCategory[]",
+      "purpose": "Determine change categories (feat, fix, refactor) based on file patterns and diff content"
+    },
+    {
+      "name": "generateCommitPrompt",
+      "signature": "function generateCommitPrompt(analysis: CommitAnalysis): string",
+      "purpose": "Create an optimized prompt for the LLM to generate a commit message"
+    },
+    {
+      "name": "generateAICommitMessage",
+      "signature": "async function generateAICommitMessage({ rootDir }: CommitInput): Promise<string>",
+      "purpose": "Main tool function that coordinates analysis and LLM interaction to generate commit message"
+    }
+  ],
+  "interfaces": [
+  "interface CommitAnalysis {\n  files: string[];\n  summary: string;\n  impactedAreas: string[];\n  changeTypes: ChangeCategory[];\n  breakingChanges: boolean;\n}",
+  "interface ChangeCategory {\n  type: 'feat' | 'fix' | 'refactor' | 'docs' | 'test' | 'chore';\n  scope?: string;\n  description: string;\n}",
+  "interface LLMResponse {\n  commitMessage: string;\n  type: ChangeCategory['type'];\n  scope?: string;\n  breaking: boolean;\n}",
+  "interface CommitInput {\n  rootDir: string;\n  maxLength?: number;\n  conventional?: boolean;\n}"
+  ],
+  "security": [
+    "Sanitize git diff output before sending to LLM - remove sensitive data patterns (API keys, tokens)",
+    "Validate LLM response format to prevent injection or malformed commit messages",
+    "Rate limit LLM calls to prevent excessive API usage and costs"
+  ],
+  "performance": [
+    "Cache similar commit analyses to reduce LLM calls for repeated change patterns",
+    "Implement concurrent processing for multiple file diffs",
+    "Optimize diff parsing by focusing on relevant sections (ignore formatting-only changes)",
+    "Set reasonable timeout for LLM responses (2s) with fallback to simple message generation"
+  ],
+  "tests": [
+    {
+      "name": "Feature Addition Test",
+      "input": {
+        "diff": "Add new function getUsers()",
+        "files": ["src/users.ts"]
+      },
+      "expected": "feat(users): add getUsers function for user management"
+    },
+    {
+      "name": "Multiple Category Test",
+      "input": {
+        "diff": "Fix auth bug and add docs",
+        "files": ["src/auth.ts", "README.md"]
+      },
+      "expected": "fix(auth): resolve authentication issue\n\ndocs: update README with auth instructions"
+    },
+    {
+      "name": "Breaking Change Test",
+      "input": {
+        "diff": "Change API response format",
+        "files": ["src/api.ts"]
+      },
+      "expected": "BREAKING CHANGE: feat(api): modify response structure\n\nChanges response format from array to paginated object"
+    }
+  ]
+}

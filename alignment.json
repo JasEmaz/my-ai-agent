@@ -1,0 +1,29 @@
+{
+  "aligned": true,
+  "mapping": {
+    "Choose Feature": [
+      "getFileChangesInDirectoryTool can inspect current codebase to understand scope and impact"
+    ],
+    "Plan with AI": [
+      "AI reasoning capabilities for architecture and design decisions"
+    ],
+    "Create Project Rule File": [
+      "AI can define and enforce project rules based on codebase analysis"
+    ],
+    "Implement with Context Anchors": [
+      "AI can guide implementation while maintaining context through git diffs",
+      "getFileChangesInDirectoryTool provides continuous feedback on changes"
+    ],
+    "Refactor and Review": [
+      "getFileChangesInDirectoryTool to track refactoring changes",
+      "writeReviewToMarkdownTool to document review comments",
+      "AI analysis capabilities for code quality assessment"
+    ],
+    "Commit and Share": [
+      "generateCommitMessageTool for meaningful commit messages",
+      "writeReviewToMarkdownTool for documentation",
+      "getFileChangesInDirectoryTool for final verification"
+    ]
+  },
+  "notes": "The CodeReviewAgent's capabilities fully support the development workflow. The combination of git diff inspection, commit message generation, and review documentation tools, along with AI planning and reasoning capabilities, provides complete coverage for the intended feature development process."
+}

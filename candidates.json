@@ -1,0 +1,64 @@
+{
+  "candidates": [
+    {
+      "title": "AI-Powered Commit Message Generation",
+      "impact": "Enhance commit quality by using LLM to generate meaningful, descriptive commit messages from code diffs",
+      "effort": "Medium (8-10 hours)",
+      "files": [
+        "tools.ts",
+        "index.ts",
+        "new/ai/commit-analyzer.ts"
+      ],
+      "acceptanceCriteria": [
+        "LLM integration successfully analyzes git diffs and generates contextual commit messages",
+        "Handles multiple file changes with proper categorization (feat, fix, refactor, etc.)",
+        "Maintains reasonable response time (<2s) for commit message generation"
+      ]
+    },
+    {
+      "title": "Automated Code Review Comments",
+      "impact": "Streamline code review process by automatically detecting common issues and suggesting improvements",
+      "effort": "High (15-20 hours)",
+      "files": [
+        "tools.ts",
+        "new/review/analyzer.ts",
+        "new/review/patterns.ts",
+        "new/review/templates.ts"
+      ],
+      "acceptanceCriteria": [
+        "Detects common code issues (complexity, duplication, style violations)",
+        "Generates helpful, context-aware review comments with suggested fixes",
+        "Supports customizable review rules and patterns"
+      ]
+    },
+    {
+      "title": "Git Change Statistics Dashboard",
+      "impact": "Provide quick insights into code changes with statistics and visualizations",
+      "effort": "Low (4-6 hours)",
+      "files": [
+        "tools.ts",
+        "new/stats/git-stats.ts",
+        "new/stats/formatters.ts"
+      ],
+      "acceptanceCriteria": [
+        "Calculates and displays key metrics (lines changed, file count, most modified areas)",
+        "Generates readable summary in markdown format",
+        "Updates statistics in real-time as changes are made"
+      ]
+    }
+  ],
+  "selectedFeature": {
+    "title": "AI-Powered Commit Message Generation",
+    "rationale": "Best balance of impact vs. effort - enhances daily workflow, leverages existing LLM capabilities, and provides immediate value. The current implementation uses a simple heuristic, making this an ideal candidate for AI enhancement.",
+    "files": [
+      "tools.ts",
+      "index.ts",
+      "new/ai/commit-analyzer.ts"
+    ],
+    "acceptanceCriteria": [
+      "LLM integration successfully analyzes git diffs and generates contextual commit messages",
+      "Handles multiple file changes with proper categorization (feat, fix, refactor, etc.)",
+      "Maintains reasonable response time (<2s) for commit message generation"
+    ]
+  }
+}

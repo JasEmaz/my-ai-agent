@@ -1,0 +1,31 @@
+---
+rules:
+  - id: conventional-commits
+    description: All commit messages must follow Conventional Commits format
+    enforce: >
+      Format must be type(scope): description
+      Example: feat(commit): add AI-powered message generation
+
+  - id: modular-llm-integration
+    description: LLM integration must be modular and configurable
+    enforce: >
+      Keep LLM-specific code in llm/ directory
+      Example: src/tools/llm/prompt-templates.ts exports configurable templates
+
+  - id: error-handling
+    description: Robust error handling with fallback mechanisms
+    enforce: >
+      Always provide fallback to simple commit message on LLM failure
+      Example: catch LLMTimeoutError, return `update: ${files.join(', ')}`
+
+  - id: performance-first
+    description: Maintain fast commit message generation (<2s)
+    enforce: >
+      Use caching, concurrent processing, and timeouts
+      Example: const TIMEOUT_MS = 2000; Promise.race([llmCall, timeout])
+
+  - id: type-safety
+    description: Strict TypeScript usage with explicit types
+    enforce: >
+      No any types, use explicit interfaces for all data structures
+      Example: interface CommitAnalysis { type: ChangeType; scope?: string }
